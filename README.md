@@ -2,20 +2,45 @@
 
 >
 
-## Build Setup
+## Install
 
-``` bash
-# install dependencies
-npm install
+npm install vue-city-bspicker --save
 
-# serve with hot reload at localhost:8080
-npm run dev
+## API
+```XML
 
-# build for production with minification
-npm run build
+<selectarea :provinceUrl="url.province" @selected="selecteds" :cityUrl="url.city" :areaUrl="url.area"/>
 
-# build for production and view the bundle analyzer report
-npm run build --report
+
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+```JavaScript
+
+import selectarea from 'vue-selected'
+export default {
+    data(){
+        return{
+          url:{
+            province:'',//省接口地址
+            city:'',//市接口地址
+            area:''//县接口地址
+          },
+          province:"",//默认省接口id
+          city:"",//默认市接口id
+          area:"",//默认县接口id
+          selected:[]
+        }
+        
+    },
+    components: {
+      selectarea
+    },
+    methods:{
+      selecteds(data){
+        console.log(data);//选中的数据
+        this.selected = data;
+      }
+    }
+}
+```
+

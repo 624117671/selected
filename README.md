@@ -4,7 +4,7 @@
 
 ## Install
 
-npm install vue-city-bspicker --save
+npm install vue-selected --save
 
 ## API
 ```XML

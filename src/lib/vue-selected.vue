@@ -64,9 +64,9 @@ export default {
         let $this = this
         let p = new Promise(function(resolve, reject){
             
-            axios.get($this.provinceUrl)
+            axios.get($this.provinceUrl||'src/assets/static/province.json')
             .then(function(rs){
-                $this.provinces = [{civilregionalismname:'--省--',civilregionalismid:'0'},...rs.data.data];
+                $this.provinces = [{civilregionalismname:'--省--',civilregionalismid:'0'},...(rs.data.data||rs.data)];
                 if($this.province){
                     $this.provincesId = $this.province;
                 }
@@ -117,9 +117,8 @@ export default {
             if(!bool){
                 return;
             }
-            axios.get($this.cityUrl+'?civilregionalismCode='+$this.provincesCheck.code)
+            axios.get(($this.cityUrl||'src/assets/static/city.json')+'?civilregionalismCode='+$this.provincesCheck.code)
             .then(function(rs){
-                $this.citys = [{CIVILREGIONALISMNAME:'--市--',CIVILREGIONALISMID:'0'},...rs.data.citylist];
                 
                 if(start && $this.city){
                     $this.citysId = $this.city;
@@ -127,7 +126,21 @@ export default {
                         start = false;
                     }
                 }
-                
+                if($this.cityUrl){
+                    $this.citys = [{CIVILREGIONALISMNAME:'--市--',CIVILREGIONALISMID:'0'},...rs.data.citylist];
+                }
+                else{
+                    if($this.provincesCheck.code){
+                        $this.citys = [{CIVILREGIONALISMNAME:'--市--',CIVILREGIONALISMID:'0'}];
+                        rs.data.forEach(item => {
+                            if(item.CIVILREGIONALISMID.substring(0,2) == $this.provincesCheck.code.substring(0,2)){
+                                $this.citys.push(item)
+                            }
+                            
+                        })
+                    }
+                    
+                }
                 resolve()
             })
             .catch(function (error) {
@@ -151,11 +164,21 @@ export default {
                 $this.areasId = '0';
             return;
           }
-          axios.get(this.cityUrl+'?civilregionalismCode='+$this.citysCheck.code)
+          axios.get((this.areaUrl||'src/assets/static/area.json')+'?civilregionalismCode='+$this.citysCheck.code)
           .then(function(rs){
-              $this.areas = [{CIVILREGIONALISMNAME:'--县--',CIVILREGIONALISMID:'0'},...rs.data.citylist];
               if(start && $this.area){
                   $this.areasId = $this.area;
+              }
+              if($this.areaUrl){
+                  $this.areas = [{CIVILREGIONALISMNAME:'--县--',CIVILREGIONALISMID:'0'},...rs.data.citylist];
+              }
+              else{
+                  $this.areas = [{CIVILREGIONALISMNAME:'--县--',CIVILREGIONALISMID:'0'}];
+                  rs.data.forEach(item => {
+                      if(item.CIVILREGIONALISMID.substring(0,4) == $this.citysCheck.code.substring(0,4)){
+                          $this.areas.push(item)
+                      }
+                  })
               }
           })
       },

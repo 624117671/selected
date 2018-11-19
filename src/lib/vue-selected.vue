@@ -45,7 +45,8 @@ export default {
                 citysCheck:this.citysCheck,
                 areasCheck:this.areasCheck
             },
-            municipalities:['北京','天津','重庆','宁夏','兵团']
+            municipalities:['北京','天津','重庆','宁夏','兵团'],
+            municipalitiesId:['110000','120000','500000','640000']
         }
         
     },
@@ -169,15 +170,26 @@ export default {
               if(start && $this.area){
                   $this.areasId = $this.area;
               }
+              let b = $this.municipalitiesId.indexOf($this.provincesCheck.id);
               if($this.areaUrl){
                   $this.areas = [{CIVILREGIONALISMNAME:'--县--',CIVILREGIONALISMID:'0'},...rs.data.citylist];
               }
               else{
                   $this.areas = [{CIVILREGIONALISMNAME:'--县--',CIVILREGIONALISMID:'0'}];
                   rs.data.forEach(item => {
-                      if(item.CIVILREGIONALISMID.substring(0,4) == $this.citysCheck.code.substring(0,4)){
-                          $this.areas.push(item)
+                      if(b > -1){
+                          
+                          if(item.CIVILREGIONALISMID.substring(0,4) == $this.citysCheck.code.substring(0,3)+'1'){
+
+                                $this.areas.push(item)
+                            }
                       }
+                      else{
+                          if(item.CIVILREGIONALISMID.substring(0,4) == $this.citysCheck.code.substring(0,4)){
+                                $this.areas.push(item)
+                            }
+                      }
+                      
                   })
               }
           })

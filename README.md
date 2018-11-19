@@ -2,8 +2,11 @@
 
 >
 
-## Install
+## 区划数据来源
 
+[民政部门户网站](http://www.mca.gov.cn/article/sj/xzqh/2018/201804-12/20180910291042.html)
+
+##安装
 npm install vue-selected --save
 
 ## API
@@ -25,9 +28,9 @@ export default {
             city:'',//市接口地址
             area:''//县接口地址
           },
-          province:"",//默认省接口id
-          city:"",//默认市接口id
-          area:"",//默认县接口id
+          province:"",//默认省id
+          city:"",//默认市id
+          area:"",//默认县id
           selected:[]
         }
         

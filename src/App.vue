@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <selected/>
+    <selected :province="province" :city="city" :area="area"/>
   </div>
 </template>
 
@@ -10,8 +10,17 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+      url:{
+            province:'',//省接口地址
+            city:'',//市接口地址
+            area:''//县接口地址
+          },
+          province:"140000",//默认省id
+          city:"140100",//默认市id
+          area:"140106",//默认县id
+          selected:[]
+        }
+    
   },
   components:{
     selected

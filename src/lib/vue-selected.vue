@@ -120,7 +120,7 @@ export default {
             }
             axios.get(($this.cityUrl||'src/assets/static/city.json')+'?civilregionalismCode='+$this.provincesCheck.code)
             .then(function(rs){
-                
+                console.log(start,$this.city)
                 if(start && $this.city){
                     $this.citysId = $this.city;
                     if(!$this.area){
@@ -169,6 +169,7 @@ export default {
           .then(function(rs){
               if(start && $this.area){
                   $this.areasId = $this.area;
+                  start = false;
               }
               let b = $this.municipalitiesId.indexOf($this.provincesCheck.id);
               if($this.areaUrl){
